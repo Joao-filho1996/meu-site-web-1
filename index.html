@@ -6,31 +6,44 @@
   <link rel="stylesheet" href="css.css">
 </head>
 
-<body data-theme="dark">
 
-  <!-- Retângulo Azul com Logo e Título -->
-  <div class="retangulo-superior">
-    <div class="topo-header">
-      <img src="imagens/logo.png" alt="Logo" class="logo">
-      <h1>Óculos de Sol JB</h1>
-    </div>
+  <!-- Retângulo Azul com Logo e Título CENTRALIZADO -->
+<div class="retangulo-superior">
+  <!-- Botão do menu (esquerda) -->
+  <button class="menu-toggle-button" id="toggleMenuBtn">
+    <img src="imagens/menu.svg" alt="Alternar menu" width="20">
+  </button>
+
+  <!-- Logo e Título (centro) -->
+  <div class="topo-header">
+    <img src="imagens/logo.png" alt="Logo Óculos de Sol JB" class="logo">
+    <h1>Óculos de Sol JB</h1>
   </div>
-<div class="tema-selector" style="position: fixed; top: 80px; right: 20px; z-index: 2000;">
-  <label for="temaSelect" style="color: var(--color-text-light); font-family: var(--font-body);">Tema:</label>
-  <select id="temaSelect">
-    <option value="">Claro</option>
-    <option value="dark">Escuro</option>
-    <option value="green">Verde</option>
-    <option value="high-contrast">Alto Contraste</option>
-  </select>
+
+  <!-- Seletor de Temas (direita) -->
+  <div class="tema-selector">
+    <label for="temaSelect">Tema:</label>
+    <select id="temaSelect">
+      <option value="">Claro</option>
+      <option value="dark">Escuro</option>
+      <option value="green">Verde</option>
+      <option value="high-contrast">Alto Contraste</option>
+    </select>
+  </div>
+  
 </div>
 
-  <!-- Ícone do Menu Hamburguer (responsivo) -->
+  <!-- Ícone do Menu Hamburguer (para mobile) -->
   <input type="checkbox" id="menu-toggle" />
   <label for="menu-toggle" class="menu-icon">
     <img src="imagens/menu.svg" alt="Abrir menu" class="open-menu">
     <img src="imagens/close.svg" alt="Fechar menu" class="close-menu">
   </label>
+
+  <!-- Botão para esconder/mostrar menu (para desktop) -->
+<button class="menu-toggle-button" id="toggleMenuBtn" aria-label="Alternar menu lateral">
+  <img src="imagens/arrow-left.svg" alt="Alternar menu" width="20">
+</button>
 
   <!-- Menu de Navegação Lateral -->
   <nav>
@@ -41,7 +54,10 @@
       <li><a href="admin-usuario.html">Administração</a></li>
     </ul>
   </nav>
-
+<input type="checkbox" id="menu-toggle" class="hidden-checkbox">
+<label for="menu-toggle" class="menu-toggle-button">
+  <img src="menu-icon.svg" alt="Menu">
+</label>
   <!-- Conteúdo Principal -->
   <main>
     <section>
@@ -62,17 +78,40 @@
   <!-- Rodapé -->
   <footer class="footer-azul">
     <p>Desenvolvido por João Francisco Peixoto de Araújo - 
-      <a href="autor.html">Sobre Autor
-        <script>
-  const selectTema = document.getElementById('temaSelect');
+      <a href="autor.html">Sobre Autor</a></p>
+  </footer>
 
-  selectTema.addEventListener('change', function () {
-    const temaSelecionado = this.value;
-    if (temaSelecionado) {
-      document.body.setAttribute('data-theme', temaSelecionado);
-    } else {
-      document.body.removeAttribute('data-theme'); // volta ao padrão
-    }
-  });
+  <script>
+    // Controle do tema
+    const selectTema = document.getElementById('temaSelect');
+    selectTema.addEventListener('change', function() {
+      const temaSelecionado = this.value;
+      if (temaSelecionado) {
+        document.body.setAttribute('data-theme', temaSelecionado);
+      } else {
+        document.body.removeAttribute('data-theme');
+      }
+    });
+
+    // Controle do botão de esconder/mostrar menu
+    const toggleMenuBtn = document.getElementById('toggleMenuBtn');
+    toggleMenuBtn.addEventListener('click', function() {
+      document.body.classList.toggle('menu-hidden');
+      document.body.classList.toggle('menu-visible');
+      
+      // Atualiza o ícone do botão
+      const isHidden = document.body.classList.contains('menu-hidden');
+      toggleMenuBtn.innerHTML = isHidden ? 
+        '<img src="imagens/menu.svg" alt="Mostrar menu" width="20">' : 
+        '<img src="imagens/close.svg" alt="Esconder menu" width="20">';
+    });
+  </script>
+  
+  
+
+
+
+
 </script>
-
+</body>
+</html>

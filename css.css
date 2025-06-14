@@ -1,5 +1,3 @@
-/* estilo2.css */
-
 /* 🎨 Variáveis de cores e fontes */
 :root {
   --color-primary: hsl(202, 92%, 40%);
@@ -8,22 +6,22 @@
   --color-object-bg: #ddd;
   --color-text-light: white;
   --color-background: #ffffff;
-
+  --color-text-dark: #333;
   --font-title: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-body: 'Arial', sans-serif;
 }
 
-/* Tema escuro */
+/* Temas */
 [data-theme="dark"] {
-  --color-primary: #1e2a38;
-  --color-hover: #2c2c2c;
-  --color-divider: #666;
-  --color-object-bg: #2e2e2e;
+  --color-primary: #022042;
+  --color-hover: #6e6464;
+  --color-divider: #2b2828;
+  --color-object-bg: #5f5959;
   --color-text-light: #f5f5f5;
   --color-background: #121212;
+  --color-text-dark: #fff8f8;
 }
 
-/* Tema verde */
 [data-theme="green"] {
   --color-primary: #2e7d32;
   --color-hover: #1b5e20;
@@ -31,63 +29,143 @@
   --color-object-bg: #c8e6c9;
   --color-text-light: #ffffff;
   --color-background: #f0fff4;
+  --color-text-dark: #1b5e20;
 }
 
-/* Tema alto contraste */
 [data-theme="high-contrast"] {
-  --color-primary: #000000;
+  --color-primary: #ff0000;
   --color-hover: #ffffff;
   --color-divider: #ffffff;
-  --color-object-bg: #ffff00;
+  --color-object-bg: #fffff5;
   --color-text-light: #ffffff;
-  --color-background: #000000;
+  --color-background: #fdfdfd;
+  --color-text-dark: #000000;
 }
 
-/* Retângulo azul fixo no topo */
+/* Reset e Estilos Gerais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  background-color: var(--color-background);
+  color: var(--color-text-dark);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
 .retangulo-superior {
   background-color: var(--color-primary);
   padding: 10px 20px;
   position: fixed;
   top: 0;
-  left: 200px; /* largura do menu lateral */
+  left: 0;
   right: 0;
   height: 80px;
   display: flex;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
   font-family: var(--font-body);
 }
 
-/* Alinhamento horizontal de logo e título */
 .topo-header {
   display: flex;
   align-items: center;
   gap: 15px;
   color: var(--color-text-light);
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: center;
 }
 
-/* Estilização da logo */
 .logo {
   width: 60px;
   height: auto;
+  display: block;
 }
 
-/* Estilização do título */
 .topo-header h1 {
   margin: 0;
   font-size: 24px;
   font-family: var(--font-title);
+  text-align: center;
+  flex-shrink: 0;
 }
 
-/* Menu lateral */
+/* Seletor de temas */
+.tema-selector {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tema-selector label {
+  color: var(--color-text-light);
+  font-family: var(--font-body);
+}
+
+.tema-selector select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid var(--color-divider);
+  background-color: var(--color-background);
+  color: var(--color-text-dark);
+}
+
+/* Controle do Menu Lateral */
+.hidden-checkbox {
+  display: none;
+}
+
+.menu-toggle-button {
+  position: fixed;
+  top: 30px;
+  left: 20px;
+  z-index: 1100;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+}
+
+.menu-toggle-button img {
+  width: 24px;
+  height: 24px;
+  filter: invert(1);
+  transition: transform 0.3s ease;
+}
+
+.menu-toggle-button:hover {
+  background-color: var(--color-hover);
+  transform: scale(1.1);
+}
+
+/* Menu de navegação */
 nav {
-  width: 200px;
+  width: 250px;
   background-color: var(--color-primary);
   height: 100vh;
   position: fixed;
   top: 0;
-  left: 0;
-  font-family: var(--font-body);
+  left: -250px;
+  transition: left 0.3s ease;
+  z-index: 999;
+  padding-top: 80px;
 }
 
 nav ul {
@@ -102,45 +180,153 @@ nav li {
 
 nav a {
   display: block;
-  padding: 15px;
+  padding: 15px 20px;
   color: var(--color-text-light);
   text-decoration: none;
+  transition: background-color 0.3s;
+  font-family: var(--font-body);
+  font-size: 16px;
 }
 
-nav a:hover {
+nav a:hover, nav a.active {
   background-color: var(--color-hover);
 }
 
+/* Conteúdo principal */
 main {
-  margin-left: 200px;
-  margin-top: 100px;
+  margin-top: 80px;
   padding: 20px;
   flex-grow: 1;
-  font-family: var(--font-body);
+  transition: margin-left 0.3s ease;
+  margin-left: 0;
+}
+
+/* Estados do menu */
+#menu-toggle:checked ~ nav {
+  left: 0;
+}
+
+#menu-toggle:checked ~ main {
+  margin-left: 250px;
+}
+
+#menu-toggle:checked ~ .menu-toggle-button img {
+  transform: rotate(180deg);
+}
+
+/* Conteúdo */
+section {
+  margin-bottom: 30px;
+}
+
+h2, h3 {
+  color: var(--color-primary);
+  margin-bottom: 15px;
 }
 
 .objetos-tema {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .objeto {
   background-color: var(--color-object-bg);
   padding: 20px;
+  border-radius: 8px;
   text-align: center;
+  transition: transform 0.3s;
 }
 
+.objeto:hover {
+  transform: translateY(-5px);
+}
+
+.objeto img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Rodapé */
 footer {
-  width: 100%;
-  padding: 20px;
   background-color: var(--color-primary);
   color: var(--color-text-light);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-body);
+  padding: 20px;
+  text-align: center;
+  margin-top: auto;
+}
+
+footer a {
+  color: var(--color-text-light);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .topo-header h1 {
+    font-size: 20px;
+  }
+  
+  .logo {
+    width: 50px;
+  }
+  
+  .tema-selector {
+    right: 10px;
+    top: 60px;
+    transform: none;
+  }
+  
+  .menu-toggle-button {
+    left: 10px;
+    top: 25px;
+  }
+  
+  .objetos-tema {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu-toggle-button {
+    display: flex;
+  }
+}
+
+/* Impressão */
+@media print {
+  .menu-toggle-button, nav, .tema-selector {
+    display: none !important;
+  }
+  
+  .retangulo-superior {
+    position: static;
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  .topo-header h1 {
+    color: black !important;
+  }
+  
+  main {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+  }
+  
+  footer {
+    background-color: white !important;
+    color: black !important;
+    border-top: 1px solid #ccc;
+  }
+  
+  footer a {
+    color: black !important;
+  }
 }
